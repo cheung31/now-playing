@@ -10,7 +10,9 @@ class Home extends React.Component {
           <h2>moviez</h2>
           <h3>Now Playing</h3>
         </div>
-        <NowPlayingList/>
+        <div className="Home-main">
+          <NowPlayingList />
+        </div>
       </div>
     );
   }
