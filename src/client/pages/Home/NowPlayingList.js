@@ -4,20 +4,25 @@ import { FixedSizeList as List } from 'react-window';
 
 const Row = ({ data, index, style }) => {
   let movie = data[index];
-  return <div style={style}>{movie.original_title}</div>;
+  return <div style={style}>
+    <div style={{ padding: '0 30px', borderBottom: '1px solid #EEE' }}>
+      <h3>{movie.original_title}</h3>
+      <p>Release Date: {movie.release_date}</p>
+    </div>
+  </div>;
 };
 
 function NowPlayingList() {
+  const [listPage, setListPage] = useState(1);
   const [listHeight, setListHeight] = useState(0);
   const [moviesList, setMoviesList] = useState([]);
-
   useEffect(() => {
-    axios.get('/tmdb/movie/now_playing')
+    axios.get(`/tmdb/movie/now_playing?page=${listPage}`)
       .then(({ data }) => {
         setMoviesList([...moviesList, ...data.results]);
+        setListPage(data.page);
       });
   }, []);
-
   useEffect(() => {
     function handleWindowResize() {
       setListHeight(window.innerHeight - 120);
@@ -41,7 +46,7 @@ function NowPlayingList() {
       height={listHeight}
       itemCount={moviesList.length}
       itemData={moviesList}
-      itemSize={35}
+      itemSize={100}
       width='100%'
     >
       {Row}

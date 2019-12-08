@@ -4,7 +4,7 @@ import { getNowPlayingList, getMovieDetails } from '../lib/tmdb';
 let tmdbRouter = Router();
 
 tmdbRouter.get('/movie/now_playing', (req, res) => {
-  getNowPlayingList()
+  getNowPlayingList({ page: req.query.page || 1 })
     .then(data => res.json(data));
 });
 

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-function getNowPlayingList() {
-  return axios.get(`${BASE_URL}/movie/now_playing?api_key=${process.env.TMDB_API_KEY}`)
+function getNowPlayingList({ page }) {
+  return axios.get(`${BASE_URL}/movie/now_playing?api_key=${process.env.TMDB_API_KEY}&page=${page}`)
     .then(({ data }) => data);
 }
 
