@@ -1,0 +1,9 @@
+.Home {
+  text-align: center;
+}
+
+.Home-header {
+  background-color: #222;
+  padding: 10px 20px;
+  color: white;
+}

@@ -1,12 +1,17 @@
-import App from './App';
+import App from '../client/App';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
+import tmdbRouter from './router.tmdb';
+require('dotenv').config();
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
 const server = express();
+
+server.use('/tmdb', tmdbRouter);
+
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
