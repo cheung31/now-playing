@@ -17,7 +17,9 @@ const Grid = withInfiniteLoading(FixedSizeGrid);
 const Row = ({ data, index, style }) => {
   let movie = data[index];
   return <Link to={`/movies/${movie.id}`} className="Movie-row" style={{...style, display: 'flex', alignItems: 'center' }}>
-      <img style={{ width: 92 }} src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
+      <div style={{ width: 92 }}>
+        <img style={{ width: 92 }} src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
+      </div>
       <div className="Movie-description" style={{ marginLeft: 20 }}>
         <h3>{movie.original_title}</h3>
         <p>Release Date: {movie.release_date}</p>
