@@ -48,10 +48,7 @@
 > I decided to rely on some open-source libraries to help with some of the complexity since I've seen high adoption/activity in their 
 > respective GitHub repos. Below, you can see more details on why a specific framework/library was chosen.
 >
-> One non-functional requirement I missed was test coverage. My initial feeling towards the entire scope is that it's not too complex.
-> I'm relying on well-tested libraries. Where bugs could occur are related to the way I'm saving state and the shape of data that state is.
-> If I had more time, I would add a basic test suite to assert API call payload structure. I would add some tests to assert when API calls fail and 
-> how that gets displayed to the user.
+> See below on thoughts after finishing my submission about things I'd change or do differently if I had more time.
  
  ## Architecture
  The architecture / choice of dependencies will be influenced by both non-functional and functional requirements listed above.
@@ -76,6 +73,19 @@
      * [react-window](https://github.com/bvaughn/react-window)
    * API fetching
      * [axios](https://github.com/axios/axios) - Client-side HTTP request library
+     
+## Things I'd Change
+
+> I decided to de-prioritize test coverage in my non-functional requirements. Looking at the scope of the project, I 
+> felt like this is a read-only application. There's not a lot of risk in such an application. Where bugs can arise is 
+> how I fetch the data, and manipulate it for display. And also what happens when the API I'm fetching fails. If I had 
+> more time I'd write a basic test suite to assert those two things at minimum.
+>
+> I was not able to implement the "list continuity" feature. Because I'm keeping my state minimal (no Redux), I don't have a way
+> to capture state across multiple components outside of their lifecycles. At the moment once the list unmounts after a 
+> route change, the loaded movies data will be garbage collected. If I had more time, I'd add Redux to manage the list and pagination
+> such that I could return to the Now Playing route, and have the list re-render the loaded content from memory and scroll to the 
+> appropriate scroll offset.
 
 ## Random notes for myself
 * Movie DB API
