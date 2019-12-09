@@ -1,3 +1,8 @@
+/*
+ * Taken from [`yoavniran/convertFromGridToInfiniteProps.js`](https://gist.github.com/yoavniran/9e2a8972a8586cba7d949f448ff002f3)
+ * This allows `react-window-infinite-loader` to support a `Grid`
+ */
+
 import React, { useRef, useEffect } from "react";
 import InfiniteLoader from "react-window-infinite-loader";
 

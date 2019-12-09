@@ -1,3 +1,8 @@
+/*
+ * Used the SSR component from [`react-router-nextjs-like-data-fetching`](https://github.com/jaredpalmer/react-router-nextjs-like-data-fetching)
+ * This is just a higher-order component of that. A lot of the server-side initial data fetching is inspired by that repo.
+ */
+
 import React from 'react';
 
 // This is a Higher Order Component that abstracts duplicated data fetching
