@@ -86,6 +86,13 @@
 > route change, the loaded movies data will be garbage collected. If I had more time, I'd add Redux to manage the list and pagination
 > such that I could return to the Now Playing route, and have the list re-render the loaded content from memory and scroll to the 
 > appropriate scroll offset.
+>
+> From a tech debt perspective, I would avoid inlining `style`s. I had a mix of css files and inline. If I had time to refactor
+> I would use a utility-first CSS framework (Tailwind utilities) to help with layout. To remove the inline styles, I would
+> use some CSS in JS framework such as `styled-components`. I find when I'm prototyping it's easier to inline things to quickly 
+> experiment with an idea. I also had to find a pattern to implement initial data fetching for server-side async content.
+> I stumbled upon a solution online that mimicked Next.js's `getInitialState`. While it works and is quite simple to add on,
+> have to create some conventions around defining routes (see `routes.js`) and adding a static method `getInitialData` on each Page component.
 
 ## Random notes for myself
 * Movie DB API

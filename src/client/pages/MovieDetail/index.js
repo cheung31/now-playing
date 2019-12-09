@@ -1,6 +1,6 @@
 import React from 'react';
 import withSSR from '../../components/withSSR';
-import {getMovieDetails, POSTER_BASE_URL} from '../../../lib/tmdb';
+import {getMovieDetails} from '../../../lib/tmdb';
 import Detail from './Detail';
 import './MovieDetail.css';
 

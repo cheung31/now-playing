@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from "react-router";
+import { Helmet } from 'react-helmet';
+import { withRouter } from 'react-router';
 import {POSTER_BASE_URL} from "../../../lib/tmdb";
 import './MovieDetail.css';
 import axios from "axios";
@@ -30,6 +31,9 @@ function Detail(props) {
 
   return (
     <div className="MovieDetail-main">
+      <Helmet>
+        <title>moviez - {movie.original_title}</title>
+      </Helmet>
       <div className="MovieDetail-bg" style={{ display: 'flex', backgroundImage: `url(${POSTER_BASE_URL}/w92/${movie.poster_path})` }} />
       <div className="MovieDetail-content">
         <div style={{ display: 'flex' }}>

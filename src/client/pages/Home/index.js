@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from "react-helmet";
 import NowPlayingList from './NowPlayingList';
 import withSSR from '../../components/withSSR';
 import { getNowPlayingList } from '../../../lib/tmdb';
@@ -18,6 +19,9 @@ class Home extends React.Component {
 
     return (
       <div className="Home">
+        <Helmet>
+          <title>moviez - Now Playing</title>
+        </Helmet>
         <div className="Home-header">
           <h2>moviez</h2>
           <h3>Now Playing</h3>
