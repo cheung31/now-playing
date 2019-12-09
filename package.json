@@ -15,7 +15,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-window": "^1.8.5"
+    "react-window": "^1.8.5",
+    "react-window-infinite-loader": "^1.0.5"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
