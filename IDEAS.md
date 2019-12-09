@@ -1,4 +1,8 @@
-# moviez
+# My thoughts and ideas
+
+> Here's the general thought process I took when figuring out and evaluating what to optimize for.
+> I typically start identifying non-functional requirements alongside functional requirements.
+> Non-functional requirements can help influence architecture. Functional requirements are the explicit features we need to deliver.
 
 ## Non-functional Requirements
 * Performant UI
@@ -29,7 +33,26 @@
   * Navigate to new screen
   * Fetch `Movie Details` of a particular movie
   * Navigate back to list/dismiss details, retains scroll position in list
-  
+ 
+> As mentioned above, the architecture is influenced a lot by the non-functional requirements I thought should be a priority.
+> This led to a client/server application. The server helps proxy API calls to avoid cross-origin resource sharing issues.
+> It also helps secure the API key and not expose from the client-side if we were to directly hit the 3rd-party API.
+> The server also gives us an opportunity to server-side render some of the UI which can be a benefit for SEO and enhances page load performance
+> and time to first interaction. One trade-off of this is the overhead of a proxy server. I have to replicate some endpoints to pass-through API calls.
+>
+> On the client-side, I wanted the application to be responsive on different device sizes. I also wanted to ensure scroll performance
+> and memory footprint was minimal. To achieve this on a large list of data (~1000 items), I relied on a virtualized list which
+> puts an upper bound on the number of DOM elements to represent the list. Looking at the repsonse of the API
+> it appears the list is paginated. So in addition to a virtualized list, we can use an infinite loading technique to load additional pages.
+>
+> I decided to rely on some open-source libraries to help with some of the complexity since I've seen high adoption/activity in their 
+> respective GitHub repos. Below, you can see more details on why a specific framework/library was chosen.
+>
+> One non-functional requirement I missed was test coverage. My initial feeling towards the entire scope is that it's not too complex.
+> I'm relying on well-tested libraries. Where bugs could occur are related to the way I'm saving state and the shape of data that state is.
+> If I had more time, I would add a basic test suite to assert API call payload structure. I would add some tests to assert when API calls fail and 
+> how that gets displayed to the user.
+ 
  ## Architecture
  The architecture / choice of dependencies will be influenced by both non-functional and functional requirements listed above.
  * Server-side
@@ -54,7 +77,7 @@
    * API fetching
      * [axios](https://github.com/axios/axios) - Client-side HTTP request library
 
-## Random Notes
+## Random notes for myself
 * Movie DB API
   * Register API Key
   * Look at movies related endpoints
