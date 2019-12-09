@@ -54,7 +54,7 @@ server
         } else {
           res.status(200).send(
             `<!doctype html>
-    <html lang="">
+    <html lang="" style="background-color: #111">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="utf-8" />

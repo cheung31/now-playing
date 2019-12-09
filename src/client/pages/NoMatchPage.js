@@ -2,7 +2,9 @@ import React from 'react';
 
 function NoMatchPage() {
   return (
-    <h1>404 - Page not found</h1>
+    <div style={{ padding: 30, width: '100%', height: '100%'}}>
+      <h1 style={{ color: '#FFF' }}>404 - Page not found</h1>
+    </div>
   );
 }
 
