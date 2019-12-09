@@ -23,13 +23,17 @@ const Cell = ({ data, columnIndex, rowIndex, style, columnCount}) => {
   let cellPadding = 10;
   let posterWidth = style.width - (2 * cellPadding);
   return <div style={{...style, display: 'flex', padding: cellPadding }}>
-    <div className="Movie-cell" style={{display: 'flex', flex: 1, flexDirection: 'column', borderRadius: '0 0 10px 10px', overflow: 'hidden' }}>
-      <img style={{ width: posterWidth, height: posterWidth * 1.5 }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
-      <div className="Movie-description" style={{ display: 'flex', flex: 1, flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
-        <h3>{movie.original_title}</h3>
-        <p>Release Date: {movie.release_date}</p>
-      </div>
-    </div>
+    {
+      movie
+        ? <div className="Movie-cell" style={{display: 'flex', flex: 1, flexDirection: 'column', borderRadius: '0 0 10px 10px', overflow: 'hidden' }}>
+          <img style={{ width: posterWidth, height: posterWidth * 1.5 }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
+          <div className="Movie-description" style={{ display: 'flex', flex: 1, flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
+            <h3>{movie.original_title}</h3>
+            <p>Release Date: {movie.release_date}</p>
+          </div>
+        </div>
+        : null
+    }
   </div>
 };
 
@@ -103,7 +107,7 @@ function NowPlayingList(props) {
       height={listHeight}
       columnCount={gridColumnCount}
       columnWidth={gridWidth / gridColumnCount}
-      rowCount={Math.floor(moviesList.length / gridColumnCount)}
+      rowCount={Math.ceil(moviesList.length / gridColumnCount)}
       rowHeight={(gridWidth / gridColumnCount) * 1.8}
       itemData={moviesList}
     >
