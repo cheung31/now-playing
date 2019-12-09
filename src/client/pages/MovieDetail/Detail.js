@@ -37,10 +37,10 @@ function Detail(props) {
       <div className="MovieDetail-bg" style={{ display: 'flex', backgroundImage: `url(${POSTER_BASE_URL}/w92/${movie.poster_path})` }} />
       <div className="MovieDetail-content">
         <div style={{ display: 'flex' }}>
-          <div style={{ width: '100%',  maxWidth: 400, paddingRight: '5%' }}>
+          <div style={{ flex: 1, maxWidth: 400, paddingRight: '5%' }}>
             <img style={{ width: '100%' }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
           </div>
-          <div>
+          <div style={{ flex: 2 }}>
             <h1 style={{ marginTop: 10 }}>{movie.original_title}</h1>
             <p>Release Date: {movie.release_date}</p>
             <p>{movie.overview}</p>
