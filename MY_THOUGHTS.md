@@ -1,4 +1,4 @@
-# My thoughts and ideas
+# My thoughts and ideas 🤔
 
 > Here's the general thought process I took when figuring out and evaluating what to optimize for.
 > I typically start identifying non-functional requirements alongside functional requirements.
@@ -50,7 +50,7 @@
 >
 > See below on thoughts after finishing my submission about things I'd change or do differently if I had more time.
  
- ## Architecture
+ ## Architecture 🛠
  The architecture / choice of dependencies will be influenced by both non-functional and functional requirements listed above.
  * Server-side
    * Server-side rendering + Client-side hydration
@@ -74,7 +74,7 @@
    * API fetching
      * [axios](https://github.com/axios/axios) - Client-side HTTP request library
      
-## Things I'd Change
+## Things I'd Change 😅
 
 > I decided to de-prioritize test coverage in my non-functional requirements. Looking at the scope of the project, I 
 > felt like this is a read-only application. There's not a lot of risk in such an application. Where bugs can arise is 
@@ -94,7 +94,7 @@
 > I stumbled upon a solution online that mimicked Next.js's `getInitialState`. While it works and is quite simple to add on,
 > have to create some conventions around defining routes (see `routes.js`) and adding a static method `getInitialData` on each Page component.
 
-## Random notes for myself
+## Random notes for myself 📝
 * Movie DB API
   * Register API Key
   * Look at movies related endpoints
