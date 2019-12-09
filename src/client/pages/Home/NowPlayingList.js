@@ -1,19 +1,22 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { FixedSizeList as List, FixedSizeGrid as Grid } from 'react-window';
+import { FixedSizeList, FixedSizeGrid } from 'react-window';
 import { POSTER_BASE_URL } from '../../../lib/tmdb';
+import withInfiniteLoading from "../../components/withInfiniteLoading";
 
 const MOBILE_WIDTH = 768;
 const TABLET_WIDTH = 1024;
 const DESKTOP_WIDTH = 1200;
 
-const listRef = React.createRef();
-const gridRef = React.createRef();
+const List = withInfiniteLoading(FixedSizeList);
+const Grid = withInfiniteLoading(FixedSizeGrid);
+// const List = FixedSizeList;
+// const Grid = FixedSizeGrid;
 
 const Row = ({ data, index, style }) => {
   let movie = data[index];
   return <div className="Movie-row" style={{...style, display: 'flex', alignItems: 'center' }}>
-    <img src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
+    <img style={{ width: 92 }} src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
     <div className="Movie-description" style={{ marginLeft: 20 }}>
       <h3>{movie.original_title}</h3>
       <p>Release Date: {movie.release_date}</p>
@@ -46,20 +49,28 @@ function NowPlayingList(props) {
     data
   } = props;
 
+  const listRef = React.createRef();
+  const gridRef = React.createRef();
+
+  const [isFetchingPage, setIsFetchingPage] = useState(false);
   const [didSwitchListType, setDidSwitchListType] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [visibleStartIndex, setVisibleStartIndex] = useState(0);
-  const [listPage, setListPage] = useState(1);
+  const [listPage, setListPage] = useState(data.page);
+  const [listSize, setListSize] = useState(data.total_results);
   const [listHeight, setListHeight] = useState(0);
   const [gridWidth, setGridWidth] = useState(MOBILE_WIDTH);
   const [gridColumnCount, setGridColumnCount] = useState(3);
   const [moviesList, setMoviesList] = useState((data && data.results) || []);
   useEffect(() => {
     if (!moviesList || !moviesList.length) {
+      setIsFetchingPage(true);
       axios.get(`/tmdb/movie/now_playing?page=${listPage}`)
         .then(({data}) => {
           setMoviesList([...moviesList, ...data.results]);
           setListPage(data.page);
+          setListSize(data.total_results);
+          setIsFetchingPage(false);
         });
     }
   }, []);
@@ -118,8 +129,23 @@ function NowPlayingList(props) {
       itemSize={138}
       onItemsRendered={({visibleStartIndex}) => {
         if (!didSwitchListType && !isNaN(visibleStartIndex)) {
+          // console.log('## list', didSwitchListType, visibleStartIndex);
           setVisibleStartIndex(visibleStartIndex)
         }
+      }}
+
+      items={moviesList}
+      hasNextPage={moviesList.length < listSize}
+      isNextPageLoading={isFetchingPage}
+      loadNextPage={() => {
+        setIsFetchingPage(true);
+        axios.get(`/tmdb/movie/now_playing?page=${listPage + 1}`)
+          .then(({data}) => {
+            setMoviesList([...moviesList, ...data.results]);
+            setListPage(data.page);
+            setListSize(data.total_results);
+            setIsFetchingPage(false);
+          });
       }}
     >
       {Row}
@@ -136,8 +162,23 @@ function NowPlayingList(props) {
       onItemsRendered={({visibleColumnStartIndex, visibleRowStartIndex}) => {
         if (!didSwitchListType && !isNaN(visibleColumnStartIndex) && !isNaN(visibleRowStartIndex)) {
           let index = (visibleRowStartIndex * gridColumnCount) + visibleColumnStartIndex;
+          // console.log('## grid', didSwitchListType, index);
           setVisibleStartIndex(index);
         }
+      }}
+
+      items={moviesList}
+      hasNextPage={moviesList.length < listSize}
+      isNextPageLoading={isFetchingPage}
+      loadNextPage={() => {
+        setIsFetchingPage(true);
+        axios.get(`/tmdb/movie/now_playing?page=${listPage + 1}`)
+          .then(({data}) => {
+            setMoviesList([...moviesList, ...data.results]);
+            setListPage(data.page);
+            setListSize(data.total_results);
+            setIsFetchingPage(false);
+          });
       }}
     >
       {withColumnCount(Cell, gridColumnCount)}
