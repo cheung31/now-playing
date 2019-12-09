@@ -10,7 +10,9 @@
   background-color: #222;
   padding: 10px 20px;
   color: white;
-  height: 120px;
+}
+.Home-header h3 {
+  margin: 0 0 11.2px 0;
 }
 
 .Home-main {
@@ -27,6 +29,7 @@
 
 .Movie-cell {
   transition: all .25s;
+  background-color: #EEE;
   border: 1px solid #CCC;
 }
 .Movie-cell:hover {
@@ -37,7 +40,6 @@
 }
 
 .Movie-description {
-  background-color: #EEE;
   color: #222;
 }
 
@@ -52,6 +54,10 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .Home-header {
+    border-bottom: 1px solid #333;
+  }
+
   .Movie-cell {
     border: 1px solid #555;
   }

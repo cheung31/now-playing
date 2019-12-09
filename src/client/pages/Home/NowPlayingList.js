@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import Link from 'react-router-dom/Link';
 import { FixedSizeList, FixedSizeGrid } from 'react-window';
 import { POSTER_BASE_URL } from '../../../lib/tmdb';
 import withInfiniteLoading from "../../components/withInfiniteLoading";
@@ -15,13 +16,13 @@ const Grid = withInfiniteLoading(FixedSizeGrid);
 
 const Row = ({ data, index, style }) => {
   let movie = data[index];
-  return <div className="Movie-row" style={{...style, display: 'flex', alignItems: 'center' }}>
-    <img style={{ width: 92 }} src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
-    <div className="Movie-description" style={{ marginLeft: 20 }}>
-      <h3>{movie.original_title}</h3>
-      <p>Release Date: {movie.release_date}</p>
-    </div>
-  </div>;
+  return <Link to={`/movies/${movie.id}`} className="Movie-row" style={{...style, display: 'flex', alignItems: 'center' }}>
+      <img style={{ width: 92 }} src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
+      <div className="Movie-description" style={{ marginLeft: 20 }}>
+        <h3>{movie.original_title}</h3>
+        <p>Release Date: {movie.release_date}</p>
+      </div>
+  </Link>;
 };
 
 const Cell = ({ data, columnIndex, rowIndex, style, columnCount}) => {
@@ -31,13 +32,13 @@ const Cell = ({ data, columnIndex, rowIndex, style, columnCount}) => {
   return <div style={{...style, display: 'flex', padding: cellPadding }}>
     {
       movie
-        ? <div className="Movie-cell" style={{display: 'flex', flex: 1, flexDirection: 'column', borderRadius: '0 0 10px 10px', overflow: 'hidden' }}>
-          <img style={{ width: posterWidth, height: posterWidth * 1.5 }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
-          <div className="Movie-description" style={{ display: 'flex', flex: 1, flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
-            <h3>{movie.original_title}</h3>
-            <p>Release Date: {movie.release_date}</p>
-          </div>
-        </div>
+        ? <Link to={`/movies/${movie.id}`} className="Movie-cell" style={{display: 'flex', flex: 1, flexDirection: 'column', borderRadius: '0 0 10px 10px', overflow: 'hidden' }}>
+            <img style={{ width: posterWidth, height: posterWidth * 1.5 }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
+            <div className="Movie-description" style={{ display: 'flex', flex: 1, flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
+              <h3>{movie.original_title}</h3>
+              <p>Release Date: {movie.release_date}</p>
+            </div>
+        </Link>
         : null
     }
   </div>

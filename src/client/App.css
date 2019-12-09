@@ -3,7 +3,6 @@ html, body, #root {
     height: 100%;
     margin: 0;
     font-family: Helvetica, Arial, sans-serif;
-    overflow-y: hidden;
 }
 
 body {
@@ -17,9 +16,5 @@ body {
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #333;
-    }
-
-    .Home-header {
-        border-bottom: 1px solid #333;
     }
 }

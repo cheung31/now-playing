@@ -9,7 +9,7 @@ tmdbRouter.get('/movie/now_playing', (req, res) => {
 });
 
 tmdbRouter.get('/movie/:movieId', (req, res) => {
-  getMovieDetails()
+  getMovieDetails(req.params.movieId)
     .then(data => res.json(data));
 });
 

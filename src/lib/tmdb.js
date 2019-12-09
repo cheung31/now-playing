@@ -8,7 +8,7 @@ function getNowPlayingList({ page }) {
     .then(({ data }) => data);
 }
 
-function getMovieDetails() {
+function getMovieDetails(movieId) {
   return axios.get(`${BASE_URL}/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`)
     .then(({ data }) => data);
 }
