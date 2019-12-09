@@ -8,6 +8,8 @@
     * Server-side rendered / hydrate on client-side
   * Smooth scrolling of long list of content
     * Virtualized list
+* SEO friendly
+  * Content should be part of server HTML document response (server-side rendered) such that content is crawlable
 * Continuity in user flow
   * Navigating from a list retains scroll position when returning to that list
 * Mobile / desktop friendly

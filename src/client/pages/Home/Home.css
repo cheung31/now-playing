@@ -26,7 +26,7 @@
 }
 
 .Movie-cell {
-  transition: transform .25s;
+  transition: all .25s;
   border: 1px solid #CCC;
 }
 .Movie-cell:hover {
@@ -42,8 +42,13 @@
 }
 
 .Movie-row {
+  transition: all .25s;
   background-color: #EEE;
   border-bottom: 1px solid #DDD;
+}
+
+.Movie-row:hover {
+  background-color: #FFF;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -62,6 +67,10 @@
   .Movie-row {
     background-color: #333;
     border-bottom: 1px solid #222;
+  }
+  .Movie-row:hover {
+    background-color: #222;
+    color: #FFF;
   }
   .Movie-row .Movie-description {
     background-color: transparent;

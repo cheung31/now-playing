@@ -4,7 +4,8 @@ import { FixedSizeList as List, FixedSizeGrid as Grid } from 'react-window';
 import { POSTER_BASE_URL } from '../../../lib/tmdb';
 
 const MOBILE_WIDTH = 768;
-const DESKTOP_WIDTH = 1024;
+const TABLET_WIDTH = 1024;
+const DESKTOP_WIDTH = 1200;
 
 const Row = ({ data, index, style }) => {
   let movie = data[index];
@@ -61,7 +62,16 @@ function NowPlayingList(props) {
       setIsMobileViewport(innerWidth < MOBILE_WIDTH);
       setListHeight(innerHeight - 120);
       setGridWidth(innerWidth);
-      setGridColumnCount(innerWidth >= DESKTOP_WIDTH ? 4 : 3);
+
+      let columnCount;
+      if (innerWidth < TABLET_WIDTH) {
+        columnCount = 3;
+      } else if (innerWidth < DESKTOP_WIDTH) {
+        columnCount = 4;
+      } else {
+        columnCount = 5;
+      }
+      setGridColumnCount(columnCount);
     }
 
     handleWindowResize();
