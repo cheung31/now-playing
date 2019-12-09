@@ -7,6 +7,9 @@ const MOBILE_WIDTH = 768;
 const TABLET_WIDTH = 1024;
 const DESKTOP_WIDTH = 1200;
 
+const listRef = React.createRef();
+const gridRef = React.createRef();
+
 const Row = ({ data, index, style }) => {
   let movie = data[index];
   return <div className="Movie-row" style={{...style, display: 'flex', alignItems: 'center' }}>
@@ -43,6 +46,7 @@ function NowPlayingList(props) {
     data
   } = props;
 
+  const [didSwitchListType, setDidSwitchListType] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [visibleStartIndex, setVisibleStartIndex] = useState(0);
   const [listPage, setListPage] = useState(1);
@@ -63,6 +67,7 @@ function NowPlayingList(props) {
     function handleWindowResize() {
       const innerWidth = window.innerWidth;
       const innerHeight = window.innerHeight;
+      setDidSwitchListType(isMobileViewport !== (innerWidth < MOBILE_WIDTH));
       setIsMobileViewport(innerWidth < MOBILE_WIDTH);
       setListHeight(innerHeight - 120);
       setGridWidth(innerWidth);
@@ -86,6 +91,18 @@ function NowPlayingList(props) {
       window.removeEventListener('resize', handleWindowResize);
     };
   });
+  useEffect(() => {
+    if (didSwitchListType && isMobileViewport && listRef.current) {
+      listRef.current.scrollToItem(visibleStartIndex, 'start');
+    }
+    if (didSwitchListType && !isMobileViewport && gridRef.current) {
+      gridRef.current.scrollToItem({
+        align: 'start',
+        columnIndex: visibleStartIndex % 3,
+        rowIndex: Math.floor(visibleStartIndex / gridColumnCount)
+      });
+    }
+  });
 
   if (isLoading || !moviesList.length) {
     return <p>Loading...</p>;
@@ -93,16 +110,22 @@ function NowPlayingList(props) {
 
   return isMobileViewport
     ? <List
+      ref={listRef}
       width='100%'
       height={listHeight}
       itemCount={moviesList.length}
       itemData={moviesList}
       itemSize={138}
-      onItemsRendered={({visibleStartIndex}) => setVisibleStartIndex(visibleStartIndex)}
+      onItemsRendered={({visibleStartIndex}) => {
+        if (!didSwitchListType && !isNaN(visibleStartIndex)) {
+          setVisibleStartIndex(visibleStartIndex)
+        }
+      }}
     >
       {Row}
     </List>
     : <Grid
+      ref={gridRef}
       width={gridWidth}
       height={listHeight}
       columnCount={gridColumnCount}
@@ -110,6 +133,12 @@ function NowPlayingList(props) {
       rowCount={Math.ceil(moviesList.length / gridColumnCount)}
       rowHeight={(gridWidth / gridColumnCount) * 1.8}
       itemData={moviesList}
+      onItemsRendered={({visibleColumnStartIndex, visibleRowStartIndex}) => {
+        if (!didSwitchListType && !isNaN(visibleColumnStartIndex) && !isNaN(visibleRowStartIndex)) {
+          let index = (visibleRowStartIndex * gridColumnCount) + visibleColumnStartIndex;
+          setVisibleStartIndex(index);
+        }
+      }}
     >
       {withColumnCount(Cell, gridColumnCount)}
     </Grid>;
