@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { FixedSizeList as List } from 'react-window';
+import { POSTER_BASE_URL } from '../../../lib/tmdb';
 
 const Row = ({ data, index, style }) => {
   let movie = data[index];
-  return <div style={style}>
-    <div style={{ padding: '0 30px', borderBottom: '1px solid #EEE' }}>
+  return <div style={{...style, display: 'flex', padding: '0 30px', alignItems: 'center', borderBottom: '1px solid #EEE' }}>
+    <img src={`${POSTER_BASE_URL}${movie.poster_path}`} />
+    <div style={{ marginLeft: 20 }}>
       <h3>{movie.original_title}</h3>
       <p>Release Date: {movie.release_date}</p>
     </div>
@@ -46,7 +48,7 @@ function NowPlayingList() {
       height={listHeight}
       itemCount={moviesList.length}
       itemData={moviesList}
-      itemSize={100}
+      itemSize={150}
       width='100%'
     >
       {Row}

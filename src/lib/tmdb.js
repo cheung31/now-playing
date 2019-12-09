@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+const POSTER_BASE_URL= 'http://image.tmdb.org/t/p/w92';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 function getNowPlayingList({ page }) {
@@ -13,6 +14,8 @@ function getMovieDetails() {
 }
 
 export {
+  POSTER_BASE_URL,
+  BASE_URL,
   getNowPlayingList,
   getMovieDetails,
 }
