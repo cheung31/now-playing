@@ -117,7 +117,7 @@ function NowPlayingList(props) {
   });
 
   if (isLoading || !moviesList.length) {
-    return <p>Loading...</p>;
+    return <p style={{ padding: 30 }}>Loading...</p>;
   }
 
   return isMobileViewport

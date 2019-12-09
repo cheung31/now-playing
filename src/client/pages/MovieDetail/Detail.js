@@ -11,7 +11,7 @@ function Detail(props) {
     match
   } = props;
 
-  const [movie, setMovie] = useState(parseInt(match.params.movieId) === data.id ? data : undefined);
+  const [movie, setMovie] = useState(data && parseInt(match.params.movieId) === data.id ? data : undefined);
 
   useEffect(() => {
     if (!movie) {
@@ -23,7 +23,7 @@ function Detail(props) {
   });
 
   if (isLoading || !movie) {
-    return <p>Loading...</p>;
+    return <p style={{ padding: 30 }}>Loading...</p>;
   }
 
   console.log('########', movie);
