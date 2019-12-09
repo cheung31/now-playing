@@ -14,10 +14,17 @@ const Row = ({ data, index, style }) => {
   </div>;
 };
 
-function NowPlayingList() {
+function NowPlayingList(props) {
+  const {
+    isLoading,
+    data
+  } = props;
+
+  console.log('###', isLoading, data);
+
   const [listPage, setListPage] = useState(1);
   const [listHeight, setListHeight] = useState(0);
-  const [moviesList, setMoviesList] = useState([]);
+  const [moviesList, setMoviesList] = useState((data && data.results) || []);
   useEffect(() => {
     axios.get(`/tmdb/movie/now_playing?page=${listPage}`)
       .then(({ data }) => {
@@ -39,7 +46,7 @@ function NowPlayingList() {
     };
   });
 
-  if (!moviesList.length) {
+  if (isLoading || !moviesList.length) {
     return <p>Loading...</p>;
   }
 
