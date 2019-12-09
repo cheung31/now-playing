@@ -20,8 +20,7 @@ function NowPlayingList(props) {
     data
   } = props;
 
-  console.log('###', isLoading, data);
-
+  const [visibleStartIndex, setVisibleStartIndex] = useState(0);
   const [listPage, setListPage] = useState(1);
   const [listHeight, setListHeight] = useState(0);
   const [moviesList, setMoviesList] = useState((data && data.results) || []);
@@ -57,6 +56,7 @@ function NowPlayingList(props) {
       itemData={moviesList}
       itemSize={150}
       width='100%'
+      onItemsRendered={({visibleStartIndex}) => setVisibleStartIndex(visibleStartIndex)}
     >
       {Row}
     </List>
