@@ -10,6 +10,11 @@ Install dependencies
 yarn install
 ```
 
+Add `.env` file for environment variables
+```bash
+TMDB_API_KEY=your_api_key_here
+```
+
 Run application
 ```
 yarn start
