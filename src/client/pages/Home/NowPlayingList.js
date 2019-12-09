@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { FixedSizeList as List, FixedSizeGrid as Grid } from 'react-window';
 import { POSTER_BASE_URL } from '../../../lib/tmdb';
 
+const MOBILE_WIDTH = 768;
+const DESKTOP_WIDTH = 1024;
+
 const Row = ({ data, index, style }) => {
   let movie = data[index];
   return <div style={{...style, display: 'flex', padding: '0 30px', alignItems: 'center', borderBottom: '1px solid #EEE' }}>
@@ -37,11 +40,11 @@ function NowPlayingList(props) {
   const [visibleStartIndex, setVisibleStartIndex] = useState(0);
   const [listPage, setListPage] = useState(1);
   const [listHeight, setListHeight] = useState(0);
-  const [gridWidth, setGridWidth] = useState(768);
+  const [gridWidth, setGridWidth] = useState(MOBILE_WIDTH);
   const [gridColumnCount, setGridColumnCount] = useState(3);
   const [moviesList, setMoviesList] = useState((data && data.results) || []);
   useEffect(() => {
-    if (!data) {
+    if (!moviesList || !moviesList.length) {
       axios.get(`/tmdb/movie/now_playing?page=${listPage}`)
         .then(({data}) => {
           setMoviesList([...moviesList, ...data.results]);
@@ -53,10 +56,10 @@ function NowPlayingList(props) {
     function handleWindowResize() {
       const innerWidth = window.innerWidth;
       const innerHeight = window.innerHeight;
-      setIsMobileViewport(innerWidth < 768);
+      setIsMobileViewport(innerWidth < MOBILE_WIDTH);
       setListHeight(innerHeight - 120);
       setGridWidth(innerWidth);
-      setGridColumnCount(innerWidth >= 1024 ? 4 : 3)
+      setGridColumnCount(innerWidth >= DESKTOP_WIDTH ? 4 : 3);
     }
 
     handleWindowResize();
@@ -88,7 +91,7 @@ function NowPlayingList(props) {
       height={listHeight}
       columnCount={gridColumnCount}
       columnWidth={gridWidth / gridColumnCount}
-      rowCount={Math.ceil(moviesList.length / gridColumnCount)}
+      rowCount={Math.floor(moviesList.length / gridColumnCount)}
       rowHeight={(gridWidth / gridColumnCount) * 1.8}
       itemData={moviesList}
     >
