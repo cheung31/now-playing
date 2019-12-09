@@ -8,9 +8,9 @@ const DESKTOP_WIDTH = 1024;
 
 const Row = ({ data, index, style }) => {
   let movie = data[index];
-  return <div style={{...style, display: 'flex', padding: '0 30px', alignItems: 'center', borderBottom: '1px solid #EEE' }}>
+  return <div className="Movie-row" style={{...style, display: 'flex', alignItems: 'center' }}>
     <img src={`${POSTER_BASE_URL}/w92/${movie.poster_path}`} />
-    <div style={{ marginLeft: 20 }}>
+    <div className="Movie-description" style={{ marginLeft: 20 }}>
       <h3>{movie.original_title}</h3>
       <p>Release Date: {movie.release_date}</p>
     </div>
@@ -19,10 +19,12 @@ const Row = ({ data, index, style }) => {
 
 const Cell = ({ data, columnIndex, rowIndex, style, columnCount}) => {
   let movie = data[(rowIndex * columnCount) + columnIndex];
-  return <div style={{...style, display: 'flex'}}>
-    <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
-      <img style={{ width: style.width, height: style.width * 1.5 }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
-      <div style={{ textAlign: 'center' }}>
+  let cellPadding = 10;
+  let posterWidth = style.width - (2 * cellPadding);
+  return <div style={{...style, display: 'flex', padding: cellPadding }}>
+    <div className="Movie-cell" style={{display: 'flex', flex: 1, flexDirection: 'column', borderRadius: '0 0 10px 10px', overflow: 'hidden' }}>
+      <img style={{ width: posterWidth, height: posterWidth * 1.5 }} src={`${POSTER_BASE_URL}/w780/${movie.poster_path}`}/>
+      <div className="Movie-description" style={{ display: 'flex', flex: 1, flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
         <h3>{movie.original_title}</h3>
         <p>Release Date: {movie.release_date}</p>
       </div>
@@ -81,7 +83,7 @@ function NowPlayingList(props) {
       height={listHeight}
       itemCount={moviesList.length}
       itemData={moviesList}
-      itemSize={150}
+      itemSize={138}
       onItemsRendered={({visibleStartIndex}) => setVisibleStartIndex(visibleStartIndex)}
     >
       {Row}

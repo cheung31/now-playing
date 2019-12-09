@@ -6,6 +6,16 @@ html, body, #root {
     overflow-y: hidden;
 }
 
+body {
+    background-color: #DDD;
+}
+
 * {
     box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+    }
 }
